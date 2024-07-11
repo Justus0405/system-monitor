@@ -1,6 +1,9 @@
 # system-monitor
 A System monitoring script for Linux written in bash
 
+# Warning
+This is work in progress
+
 # dependencies
 ```shell
 bash
