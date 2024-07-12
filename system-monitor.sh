@@ -1,12 +1,12 @@
 #!/bin/bash
 clear
 
-VERSION=V0.1
+VERSION=0.1
 
 ## Dashboard Functions
 
 TOP_BAR() {
-	echo -e "┌───┤< \e[1;32mSystem Monitor $VERSION\e[0m >├───┤< \e[1;34mDashboard\e[0m >"
+	echo -e "┌───┤< \e[1;32mSystem Monitor\e[0m >├───┤< \e[1;34mDashboard\e[0m >"
 	echo -e "│"
 }
 
@@ -65,7 +65,7 @@ OS() {
 }
 
 BOTTOM_BAR() {
-	echo -e "└───┤< \e[1;31mPress Q to quit\e[0m >"
+	echo -e "└───┤< \e[1;31mVersion $VERSION\e[0m >"
 }
 
 TOP_BAR
