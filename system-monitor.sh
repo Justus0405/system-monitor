@@ -21,9 +21,35 @@ USAGE() {
 	disk_usage=$(df -h --total | awk '/total/ {printf "%s / %s (%s), available: %s\n", $3, $2, $5, $4}')
 
 	echo -e "│	┌─[\e[1;35mSystem Usage\e[0m]"
-	echo -e "│	├ <\e[1;34mCpu\e[0m>  $cpu_usage%"
-	echo -e "│	├ <\e[1;34mRam\e[0m>  $ram_usage"
-	echo -e "│	├ <\e[1;34mDisk\e[0m> $disk_usage"
+	echo -e "│	├ <\e[1;34mCpu\e[0m>      $cpu_usage%"
+	echo -e "│	├ <\e[1;34mRam\e[0m>      $ram_usage"
+	echo -e "│	├ <\e[1;34mDisk\e[0m>     $disk_usage"
+	echo -e "│"
+}
+
+NETWORK() {
+	# Tries to ping google dns server, if successful return Online, if not return Offline
+	online_status=$(if ping -c 1 8.8.8.8 &> /dev/null; then echo -e "\e[1;32mOnline\e[0m"; else echo -e "\e[1;31mOffline\e[0m"; fi)
+
+	# Show every IPv4 adress, filter only for the numbers, remove loopback adress, show remaining adress
+	local_ip=$(ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | grep -v '127.0.0.1' | head -n 1)
+
+	echo -e "│	┌─[\e[1;35mNetwork\e[0m]"
+	echo -e "│	├ <\e[1;34mInternet\e[0m> $online_status"
+	echo -e "│	├ <\e[1;34mLocal IP\e[0m> $local_ip"
+	echo -e "│"
+}
+
+OS() {
+	KERNEL=$(uname -r)
+	UPTIME=$(uptime -p)
+	# Reads the age of the file locale.conf to determine the OS age
+	AGE=$((($(date +%s) - $(date -r "/etc/locale.conf" +%s)) / 86400))
+
+	echo -e "│	┌─[\e[1;35mOS\e[0m]"
+	echo -e "│	├ <\e[1;34mKernel\e[0m>   $KERNEL"
+	echo -e "│	├ <\e[1;34mUptime\e[0m>   $UPTIME"
+	echo -e "│	├ <\e[1;34mAge\e[0m>      $AGE days"
 	echo -e "│"
 }
 
@@ -41,36 +67,13 @@ TEMPS() {
 	echo -e "│"
 }
 
-NETWORK() {
-	# Show every IPv4 adress, filter only for the numbers, remove loopback adress, show remaining adress
-	local_ip=$(ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | grep -v '127.0.0.1' | head -n 1)
-
-	echo -e "│	┌─[\e[1;35mNetwork\e[0m]"
-	echo -e "│	├ <Online Status>"
-	echo -e "│	├ <\e[1;34mLocal IP\e[0m> $local_ip"
-	echo -e "│"
-}
-
-OS() {
-	KERNEL=$(uname -r)
-	UPTIME=$(uptime -p)
-	# Reads the age of the file locale.conf to determine the OS age
-	AGE=$((($(date +%s) - $(date -r "/etc/locale.conf" +%s)) / 86400))
-
-	echo -e "│	┌─[\e[1;35mOS\e[0m]"
-	echo -e "│	├ <\e[1;34mKernel\e[0m> $KERNEL"
-	echo -e "│	├ <\e[1;34mUptime\e[0m> $UPTIME"
-	echo -e "│	├ <\e[1;34mAge\e[0m>    $AGE days"
-	echo -e "│"
-}
-
 BOTTOM_BAR() {
 	echo -e "└───┤< \e[1;31mVersion $VERSION\e[0m >"
 }
 
 TOP_BAR
 USAGE
-TEMPS
 NETWORK
 OS
+TEMPS
 BOTTOM_BAR
