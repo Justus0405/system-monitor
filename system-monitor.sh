@@ -111,6 +111,7 @@ TEMPS() {
 
 	echo -e "│"
 }
+
 BOTTOM_BAR() {
 	echo -e "└───┤< \e[1;31mVersion $VERSION\e[0m >"
 }
