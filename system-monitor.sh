@@ -35,16 +35,12 @@ OS() {
 }
 
 USAGE() {
-	# Try calculate current CPU usage does not work
-	# cpu_usage=$(grep 'cpu ' /proc/stat | awk '{usage=100-($5*100)/($2+$3+$4+$5+$6+$7+$8)} END {printf "%.0f", usage}')
-
 	# Show ram usage in mb, cut everything except line 2, calculate used percentage
 	ram_usage=$(free -m | awk 'NR==2{used=$3; total=$2; avail=$7; printf "%dmb / %dmb (%.0f%%), available: %dmb\n", used, total, used/total*100, avail}')
 
 	# Show total disk usage in gb, only use line total , print values
 	disk_usage=$(df -h --total | awk '/total/ {printf "%s / %s (%s), available: %s\n", $3, $2, $5, $4}')
 
-	# echo -e "\t│   ${RED}Cpu${ENDCOLOR}       │ $cpu_usage%"
 	echo -e "\t│   ${MAGENTA}Ram${ENDCOLOR}       │ $ram_usage"
 	echo -e "\t│   ${CYAN}Disk${ENDCOLOR}      │ $disk_usage"
 	echo -e "\t├─────────────┤"
@@ -117,7 +113,8 @@ TEMPS() {
 
 	# If no temperature sensors where found
 	if [ -z "$thermal_zone0_path" ] && [ -z "$thermal_zone1_path" ]; then
-		echo -e "${RED}Error:${ENDCOLOR} No valid temperature sensor found"
+		echo -e "\t${RED}Error:${ENDCOLOR} No valid temperature sensor found"
+		exit 1
 	fi
 
 	echo -e ""
