@@ -2,7 +2,7 @@
 A System monitoring script for Linux written in bash
 
 # Dependencies
-```shell
+```plaintext
 bash
 ```
 
