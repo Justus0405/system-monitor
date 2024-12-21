@@ -1,5 +1,5 @@
 # bfetch
-A System information script for Linux written in bash
+Another System information script for Linux written in bash
 
 ## Dependencies
 ```plaintext
