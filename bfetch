@@ -122,7 +122,7 @@ TEMPS() {
 
 case $1 in
 "-h" | "--help")
-	echo -e "usage:  system-monitor [...]"
+	echo -e "usage:  $0 [...]"
 	echo -e "arguments:"
 	echo -e "    -h | --help"
 	echo -e "    -t | --temps"

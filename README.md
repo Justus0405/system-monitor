@@ -1,5 +1,5 @@
-# System-monitor
-A System monitoring script for Linux written in bash
+# bfetch
+A System information script for Linux written in bash
 
 ## Dependencies
 ```plaintext
@@ -8,14 +8,14 @@ bash
 
 ## Installation
 ```shell
-git clone https://github.com/Justus0405/system-monitor.git
-cd system-monitor
-chmod +x system-monitor.sh
-./system-monitor.sh
+git clone https://github.com/Justus0405/bfetch.git
+cd bfetch
+chmod +x bfetch
+./bfetch
 ```
 ## Usage
 ```plaintext
-    usage:  system-monitor [...]
+    usage:  bfetch [...]
     arguments:
         -h | --help
         -t | --temps
