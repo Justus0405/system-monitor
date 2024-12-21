@@ -93,7 +93,7 @@ TEMPS() {
 	thermal_zone0_path=$(FIND_TEMP_PATH "${potential_paths_zone0[@]}")
 	thermal_zone1_path=$(FIND_TEMP_PATH "${potential_paths_zone1[@]}")
 
-	if [ -n "$thermal_zone0_path" ]; then
+	if [[ -n "$thermal_zone0_path" ]]; then
 		temp0=$(cat "$thermal_zone0_path" 2>/dev/null)
 		if [[ $temp0 =~ ^[0-9]+$ ]]; then
 			thermal_zone0=$(cat /sys/class/thermal/thermal_zone0/type 2>/dev/null || echo "Zone 0")
@@ -102,7 +102,7 @@ TEMPS() {
 		fi
 	fi
 
-	if [ -n "$thermal_zone1_path" ]; then
+	if [[ -n "$thermal_zone1_path" ]]; then
 		temp1=$(cat "$thermal_zone1_path" 2>/dev/null)
 		if [[ $temp1 =~ ^[0-9]+$ ]]; then
 			thermal_zone1=$(cat /sys/class/thermal/thermal_zone1/type 2>/dev/null || echo "Zone 1")
@@ -112,7 +112,7 @@ TEMPS() {
 	fi
 
 	# If no temperature sensors where found
-	if [ -z "$thermal_zone0_path" ] && [ -z "$thermal_zone1_path" ]; then
+	if [[ -z "$thermal_zone0_path" ]] && [[ -z "$thermal_zone1_path" ]]; then
 		echo -e "\t${RED}Error:${ENDCOLOR} No valid temperature sensor found"
 		exit 1
 	fi
@@ -126,6 +126,7 @@ case $1 in
 	echo -e "arguments:"
 	echo -e "    -h | --help"
 	echo -e "    -t | --temps"
+	echo -e "    -s | --system"
 	echo -e ""
 	exit 0
 	;;
@@ -133,12 +134,13 @@ case $1 in
 	TEMPS
 	exit 0
 	;;
-"")
+"-s" | "--system" | "")
 	TOP_BAR
 	OS
 	USAGE
 	NETWORK
 	BOTTOM_BAR
+	exit 0
 	;;
 *)
 	echo -e "${RED}Error:${ENDCOLOR} unrecognized option '$1'. use -h"

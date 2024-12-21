@@ -19,4 +19,6 @@ chmod +x system-monitor.sh
     arguments:
         -h | --help
         -t | --temps
+        -s | --system
+
 ```
